@@ -33,13 +33,7 @@ class Login extends Component {
         this.passwordChangeHandler = this.passwordChangeHandler.bind(this);
         this.submitLogin = this.submitLogin.bind(this);
     }
-    //Call the Will Mount to set the auth Flag to false
-    //to be removed
-    // componentWillMount() {
-    //     this.setState({
-    //         authFlag: false
-    //     })
-    // }
+
     //email change handler to update state variable with the text entered by the user
     emailChangeHandler = (e) => {
         this.setState({
@@ -141,12 +135,11 @@ class Login extends Component {
                                 <button onClick={this.submitLogin} className="login-button btn btn-primary">Login</button>
                             </div>
                             {/* New to Uber/Create an account section */}
-                            <div className= "col-sm-4 offset-sm-4" >
+                            <div className= "col-sm-4 col-lg-6 offset-sm-4 offset-lg-3 text-center mt-2" >
                                 New to Uber? <Link to="/signup" className = "link-color" >Create an account!</Link>
                             </div>
                         </div>
                         <br />
-                        {/* <Link to="/signup">Signup</Link> */}
                     </div>
                 </div>
             </div>
