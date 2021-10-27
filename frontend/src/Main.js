@@ -2,7 +2,7 @@ import React, {Component}   from 'react';
 import {Route}              from 'react-router-dom';
 
 import login                from './components/Authenticate/Login/login';
-import signup               from './components/Authenticate/Signup/signup';
+import signup_test               from './components/Authenticate/Signup/signup_test';
 
 import userhome             from './components/User/userhome';
 import userorder            from './components/User/userorder';
@@ -25,7 +25,8 @@ class Main extends Component {
                 {/*Render Different Component based on Route*/}
                 {/* { <Route path="/" component={Navbar}/> } */}
                 <Route path="/login"        component={login}/>
-                <Route path="/signup"       component={signup}/>
+                <Route path="/signup"       component={signup_test}/>
+                <Route path="/signup/name" component={signup_test} />
                 <Route path="/userhome"     component={userhome}/>
                 <Route path="/userorder"    component={userorder}/>
                 <Route path="/menu"         component={menu}/>
