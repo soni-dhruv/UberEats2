@@ -79,7 +79,7 @@ class Login extends Component {
                         email: this.state.email,
                         userType: response.data.userType,
                     }
-                    
+
                     this.props.loginuser(data1); //redux
                 }
             })
@@ -89,20 +89,20 @@ class Login extends Component {
                     authFlag: false,
                     message: 'Invalid Credentials'
                 })
-                
+
             });
     }
 
     render() {
         //redirect based on successful login
         let redirectVar = null;
-        console.log("this.state.userType: ", this.state.userType )
+        console.log("this.state.userType: ", this.state.userType)
         if (cookie.load('cookie')) {
             if (this.state.userType === "customer") {
                 console.log("customer");
                 redirectVar = <Redirect to="/home" />
             }
-            else{
+            else {
                 console.log("rest");
                 redirectVar = <Redirect to="/restroHome" />
             }
@@ -117,7 +117,7 @@ class Login extends Component {
                     <div className="login-form">
                         <div className="main-div align-items-center justify-content-center">
                             {/* the logo */}
-                        {/* <div class="login-logo text-center"><Logo /></div> */}
+                            {/* <div class="login-logo text-center"><Logo /></div> */}
                             {/* the message for welcome back */}
                             <div className="panel col-sm-4 col-lg-6 offset-sm-4 offset-lg-3">
                                 <h2>Welcome back</h2>
@@ -134,15 +134,15 @@ class Login extends Component {
                             </div>
                             <div className="form-group">
                                 <div className="col-sm-4 col-lg-6 offset-sm-4 offset-lg-3">
-                                    <input required="required" onChange={this.passwordChangeHandler} type="password" className="form-control" name="password" placeholder="Password"/>
+                                    <input required="required" onChange={this.passwordChangeHandler} type="password" className="form-control" name="password" placeholder="Password" />
                                 </div>
                             </div>
                             <div className="col-sm-4 col-lg-6 offset-sm-4 offset-lg-3">
                                 <button onClick={this.submitLogin} className="login-button btn btn-primary">Login</button>
                             </div>
                             {/* New to Uber/Create an account section */}
-                            <div className= "col-sm-4 offset-sm-4" >
-                                New to Uber? <Link to="/signup" className = "link-color" >Create an account!</Link>
+                            <div className="col-sm-4 offset-sm-4" >
+                                New to Uber? <Link to="/signup" className="link-color" >Create an account!</Link>
                             </div>
                         </div>
                         <br />
