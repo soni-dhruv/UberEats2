@@ -8,6 +8,7 @@ const { mongoDB } = require('./Utils/constant');
 const mongoose = require('mongoose');
 const User = require('../backend/Models/User/UsersModel');
 const RestaurantModel = require('../backend/Models/Restaurant/RestaurantModel');
+const kafka = require('../backend/kafka/client');
 
 //use cors to allow cross origin resource sharing
 app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
@@ -55,29 +56,17 @@ mongoose.connect(mongoDB, options, (err, res) => {
 //User Login
 app.post('/user/login', (req, res) => {
     console.log(req.body);
-    User.findOne({ email: req.body.email, password: req.body.password }, (error, user) => {
-        if (error) {
-            res.writeHead(500, {
-                'Content-Type': 'text/plain'
-            })
-            res.end("Error Occured");
-        }
-        if (user) {
-            // console.log("get user email",user);
-            // res.cookie('cookie', customer_users.email, { maxAge: 900000, httpOnly: false, path: '/' });
-            //req.session.User = User;
-            res.writeHead(200, {
-                'Content-Type': 'text/plain'
-            })
-            console.log("login api 200 status")
-            res.end("login api 200 status");
-        }
-        else {
-            // console.log(user);
-            res.writeHead(401, {
-                'Content-Type': 'text/plain'
-            })
-            res.end("Invalid Credentials");
+    kafka.make_request("test", req.body, function (err, results) {
+        if (err) {
+            console.log("Inside err");
+            res.json({
+                status: "error",
+                msg: "System Error, Try Again.",
+            });
+        } else {
+            console.log("Inside router post");
+            console.log(results);
+            res.status(200).send(results);
         }
     });
 });

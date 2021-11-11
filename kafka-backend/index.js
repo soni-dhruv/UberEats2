@@ -1,16 +1,5 @@
-// const config = {
-//     secret: "cmpe273_secret_key",
-//     mongoDB: 'mongodb+srv://dhruvsoni005:5297Momdad!@ubereatslab2.3ymzx.mongodb.net/dbubereats?retryWrites=true&w=majority'
-// };
-
-
 var connection =  new require('./kafka/Connection');
-//topics files
-//var signin = require('./services/signin.js');
-// const express = require("express");
 const mongoose = require("mongoose");
-
-// const { mongoDB, frontendURL } = require('../backend/Utils/config');
 
 mongoose
   .connect(
@@ -29,8 +18,9 @@ mongoose
 
 console.log("here for kafka");
 
+var login = require("../kafka-backend/kafka/services/login");
 
-//----------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------------------------------------------------------
 function handleTopicRequest(topic_name,fname){
     //var topic_name = 'root_topic';
     console.log("Inside topic request");
@@ -61,10 +51,7 @@ function handleTopicRequest(topic_name,fname){
         
     });
 }
+
 // Add your TOPICs here
-//first argument is topic name
-//second argument is a function that will handle this topic request
-
-
-
-module.exports = config;
+handleTopicRequest("test", login);
+// module.exports = config;
