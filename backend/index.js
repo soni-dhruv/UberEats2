@@ -8,6 +8,7 @@ const { mongoDB } = require('./Utils/constant');
 const mongoose = require('mongoose');
 const User = require('../backend/Models/User/UsersModel');
 const RestaurantModel = require('../backend/Models/Restaurant/RestaurantModel');
+const OrderModel = require('../backend/Models/Order/OrderModel')
 const kafka = require('../backend/kafka/client');
 
 //use cors to allow cross origin resource sharing
@@ -30,7 +31,7 @@ app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     res.setHeader('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT,DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers');
+    res.setHeader('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers');
     res.setHeader('Cache-Control', 'no-cache');
     next();
 });
@@ -53,6 +54,7 @@ mongoose.connect(mongoDB, options, (err, res) => {
 
 //---------------------------------------------------------------- USER's APIS Starts------------------------------------------//
 
+//DONE
 //User Login
 app.post('/user/login', (req, res) => {
     console.log(req.body);
@@ -71,11 +73,15 @@ app.post('/user/login', (req, res) => {
     });
 });
 
+//DONE
 //User Signup
 app.post('/user/signup', (req, res) => {
     var NewUser = User({
         email: req.body.email,
         password: req.body.password,
+        name: req.body.name,
+        phone: req.body.phone,
+        address: req.body.address
     });
 
     User.findOne({ email: req.body.email }, (error, email) => {
@@ -112,30 +118,38 @@ app.post('/user/signup', (req, res) => {
 });
 
 // //User Landing Page Customer
+
 app.get('/user/home', async function (req, res) {
-    Cust.findOne({ email: msg.email }, (err, result) => {
+    try{
+    User.findOne({ email: req.body.email }, (err, result) => {
         if (result) {
-            console.log("found restlist");
-            Rest.find({})
-                .exec((err, res) => {
-                    if (err) {
-                        console.log(err);
-                        callback(null, "Customer does not exisits12121")
-                    } else {
-                        res.forEach(function (element) {
-                            element.pincode = Math.abs(element.pincode - 12120);
-                        });
+            console.log("found restlist");            
+            RestaurantModel.find({})
+            
+                // .exec((err, res) => {
+                //     if (err) {
+                //         console.log(err);
+                //         callback(null, "Customer does not exisits12121")
+                //     } else {
+                //         res.forEach(function (element) {
+                //             element.pincode = Math.abs(element.pincode - 12120);
+                //         });
 
-                        res.sort((a, b) => a.pincode - b.pincode);
-                        callback(null, JSON.stringify(res));
-                    }
-                });
+                //         res.sort((a, b) => a.pincode - b.pincode);
+                //         callback(null, JSON.stringify(res));
+                //     }
+                // });
 
-        } else {
+        } 
+        else {
             console.log(err);
-            callback(null, "Customer does not exisits")
+            //callback(null, "Customer does not exisits")
         }
-    });
+   
+    }); }catch(e){
+        console.log(e);
+    }
+
 });
 
 // User Search Bar
@@ -398,24 +412,8 @@ app.post('/restaurant/addmenu', (req, res) => {
 })
 
 //Restaurant Update Menu Price
-app.get('/restaurant/meu/update', (req, res) => {
-    userDetailsModel.updateOne({ email: req.body }, { item_price: req.body.item_price })
-        .then((result) => {
-            if (result) {
-                console.log('Update successful. Result: ', result);
-            } else {
-                console.log('Update failed');
-            }
-            res.send(result);
-        })
-        .catch((err) => {
-            console.log(err);
-        })
-})
-
-//Restaurant Orders
-app.post('/restaurant/order', (req, res) => {
-    OrderModel.find({ 'email': req.body.email }, {})
+app.post('/restaurant/menu/update', (req, res) => {
+    RestaurantModel.findOneAndUpdate({ 'email': req.body.email, 'item_name': req.body.item_name }, { 'price': req.body.price },{new: true})
         .then((result) => {
             if (result) {
                 console.log('Results: ', result);
@@ -429,10 +427,27 @@ app.post('/restaurant/order', (req, res) => {
         })
 })
 
+//DONE
+//Restaurant Orders
+app.post('/restaurant/order', (req, res) => {
+    OrderModel.findOne({ 'r_email': req.body.email }, { _id:1 })
+        .then((result) => {
+            if (result) {
+                console.log('Results: ', result);
+            } else {
+                console.log('NO DATA');
+            }
+            res.send(result);
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+})
 
+//DONE
 //Restaurant Order Status Update
 app.post('/restaurant/order/update', (req, res) => {
-    OrderModel.findOneAndUpdate({ 'email': req.body.email }, { 'order_status': req.body.order_status })
+    OrderModel.findOneAndUpdate({ 'r_email': req.body.r_email, u_email: req.body.u_email }, { 'order_status': req.body.order_status },{new: true})
         .then((result) => {
             if (result) {
                 console.log('Results: ', result);
@@ -451,104 +466,33 @@ app.post('/restaurant/order/update', (req, res) => {
 //---------------------------------------------------------------- Test API's starts -----------------------------------------------//
 
 app.post('/test', (req, res) => {
-    RestaurantModel.updateOne({ email: req.body.email }, {
-        menu: [
-            {
-                //category_name: "Picked for you",
-                category_items: [
-                    {
-                        item_name: "Large Curly Fry",
-                        description: "Seasoned, curly-cut fried potatoes",
-                        price: 4.49,
-                        dish_type: 'veg'
-                    },
-                    {
-                        item_name: "Large Bacon Ultimate Cheeseburger Combo",
-                        description: "Bacon Ultimate Cheeseburger™️, large French Fries, and your choice of large drink.",
-                        price: 12.35,
-                        dish_type: 'non_veg'
-                    },
-                    {
-                        item_name: "Large Jack's Spicy Chicken®️ Combo",
-                        description: "Bacon Ultimate Cheeseburger™️, large French Fries, and your choice of large drink.",
-                        price: 11.98,
-                        dish_type: 'non_veg'
-                    },
-                    {
-                        item_name: "Large French Fry",
-                        description: "Crispy, golden fried potatoes",
-                        price: 4.24,
-                        dish_type: 'veg'
-                    },
-                    {
-                        item_name: "Stuffed Jalapenos",
-                        description: "Breaded spicy Jalapenos stuffed with blend of melted cheeses, served with Buttermilk Ranch Dipping Sauce upon request",
-                        price: 5.74,
-                        dish_type: 'veg'
-                    },
-                    {
-                        item_name: "Teriyaki Rice Bowl 1",
-                        description: "Rice prepared with teriyaki sauce along with soy sauce, water, honey, brown sugar, rice vinegar, sesame oil, ginger, garlic, and cornstarch.",
-                        price: 12.74,
-                        dish_type: 'vegan'
-                    }
-                ]
-            },
-            {
-                //category_name: "Featured Items",
-                category_items: [
-                    {
-                        item_name: "Large Curly Fry",
-                        description: "Seasoned, curly-cut fried potatoes",
-                        price: 4.49,
-                        dish_type: 'veg'
-
-                    },
-                    {
-                        item_name: "Large Bacon Ultimate Cheeseburger Combo",
-                        description: "Bacon Ultimate Cheeseburger™️, large French Fries, and your choice of large drink.",
-                        price: 12.35,
-                        dish_type: 'non_veg'
-                    },
-                    {
-                        item_name: "Large Jack's Spicy Chicken®️ Combo",
-                        description: "Bacon Ultimate Cheeseburger™️, large French Fries, and your choice of large drink.",
-                        price: 11.98,
-                        dish_type: 'non_veg'
-                    },
-                    {
-                        item_name: "Large French Fry",
-                        description: "Crispy, golden fried potatoes",
-                        price: 4.24,
-                        dish_type: 'veg'
-                    },
-                    {
-                        item_name: "Stuffed Jalapenos",
-                        description: "Breaded spicy Jalapenos stuffed with blend of melted cheeses, served with Buttermilk Ranch Dipping Sauce upon request",
-                        price: 5.74,
-                        dish_type: 'veg'
-                    },
-                    {
-                        item_name: "Teriyaki Rice Bowl 2",
-                        description: "Rice prepared with teriyaki sauce along with soy sauce, water, honey, brown sugar, rice vinegar, sesame oil, ginger, garlic, and cornstarch.",
-                        price: 12.74,
-                        dish_type: 'vegan'
-                    }
-                ]
-            }
-        ]
+    OrderModel.create({
+        u_email: req.body.u_email,
+        r_email: req.body.r_email,
+        order_status: req.body.order_status,
+        order_type: req.body.order_type,
+        delivery_address: req.body.delivery_address,
+        bill: req.body.bill,
+        // item: [
+        //     new Schema({
+        //         item_name: req.body.item_name,
+        //         item_price: req.body.item_price,
+        //         item_qty: req.body.item_qty
+        //     })
+        // ]
     })
-        .then((result) => {
-            if (result) {
-                console.log('Update successful. Result: ', result);
-            } else {
-                console.log('Update failed');
-            }
-            res.send(result);
-        })
-        .catch((err) => {
-            console.log(err);
-        })
+    .then((result) => {
+        if (result) {
+            console.log('Results: ', result);
+        } else {
+            console.log('NO DATA');
+        }
+        res.send(result);
+    })
+    .catch((err) => {
+        console.log(err);
+    });
+    
 })
 
 

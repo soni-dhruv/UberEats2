@@ -10,21 +10,20 @@ var restroSchema = new Schema({
     state: { type: String },
     zip_code: { type: String },
     rest_type: { type: String }, // delivery || pickup || delivery and pickup
-    menu:[ 
+    menu: [
         new Schema({
             //category_name: {type: String},
             category_items: [
                 new Schema({
-                    //item_id: {type: Number},
-                    item_name: {type: String},
-                    description: {type: String},
-                    price: {type: Number},
-                    dish_type: {type: String}
+                    //  item_id: {type: Number},
+                    item_name: { type: String },
+                    description: { type: String },
+                    price: { type: Number },
+                    dish_type: { type: String }
                 })
             ]
         })
     ],
-
     // order: [
     //     {
     //         _id: {
