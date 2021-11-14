@@ -1,31 +1,30 @@
-import React, { useCallback,useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import { SidebarData } from './SidebarData';
 import '../css/Navbar.css';
 import { IconContext } from 'react-icons';
-import {ReactComponent as Logo} from "../images/uber_eats_logo.svg";
+import { ReactComponent as Logo } from "../images/uber_eats_logo.svg";
 import SearchBar from './User/SearchBar';
 // import BookData from "../components/User/Data.json";
 import ResData from '../components/User/dummy.json';
 
-
-function Navbar() {
+  function Navbar() {
   const [sidebar, setSidebar] = useState(false);
-  const[x, setX] = useState(0);
-  const[codee,setCode] = useState('<div>initial text</div>');
+  const [x, setX] = useState(0);
+  const [codee, setCode] = useState('');
 
   const showSidebar = () => setSidebar(!sidebar);
 
   // var code;//=<div>some data</div>;
 
-  let navbarCallBack = (event, childData) => { 
-    var code=childData;
-    alert(code);
+  let navbarCallBack = (event, childData) => {
+    var code = childData;
+    // alert(code);
     setX(Math.random());
     setCode(childData);
-}
+  }
 
   return (
     <>
@@ -36,18 +35,18 @@ function Navbar() {
               <FaIcons.FaBars className="m-4" onClick={showSidebar} />
             </Link>
             <Logo />
-            <div className="mt-3 mx-3"> 
-              <SearchBar data={ResData} placeholder="random string" navbarCallBackVar={navbarCallBack}/>
-            </div>
+            {/* <div className="mt-3 mx-3">
+              <SearchBar data={ResData} placeholder="random string" navbarCallBackVar={navbarCallBack} />
+            </div> */}
+          </div>
         </div>
-      </div>
-      
-      <nav className={sidebar ? 'nav-menu active' : 'nav-menu'} style={{zIndex: '100'}} >
-        <ul className='nav-menu-items' onClick={showSidebar}>
-          <li className='navbar-toggle'>
-            <Link to='#' className='menu-bars'>
+
+        <nav className={sidebar ? 'nav-menu active' : 'nav-menu'} style={{ zIndex: '100' }} >
+          <ul className='nav-menu-items' onClick={showSidebar}>
+            <li className='navbar-toggle'>
+              <Link to='#' className='menu-bars'>
                 <AiIcons.AiOutlineClose />
-            </Link> 
+              </Link>
             </li>
             {SidebarData.map((item, index) => {
               return (
@@ -63,7 +62,7 @@ function Navbar() {
         </nav>
 
         {codee}
-        {alert("Hello! re-rendering parent")}
+        {/* {alert("Hello! re-rendering parent")} */}
       </IconContext.Provider>
     </>
   );

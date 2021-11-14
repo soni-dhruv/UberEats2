@@ -2,129 +2,133 @@ import React, { Component } from 'react';
 import Navbar from '../Navbar';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-// import Col from 'react-bootstrap/Col';
-// import Row from 'react-bootstrap/Row';
-// import Container from 'react-bootstrap/Container';
-// import CardGroup from 'react-bootstrap/CardGroup';
-// import SearchBar from './SearchBar';
-
-
-class resName{
-    constructor(){
-        this.name= 'Subway';
-        this.addr= '43 S 1st St.';
-        this.avg_cost= 2.49;
-        this.delivery_time='15-25';
-        this.img_url='https://littlesunnykitchen.com/wp-content/uploads/2020/11/Easy-Pancake-Recipe-2.jpg';
-        this.rating=4.5;
-    }
+import axios from "axios";
+import { constats } from '../../ip/config';
+class resName {
+  constructor() {
+    this.name = 'Subway';
+    this.addr = '43 S 1st St.';
+    this.avg_cost = 2.49;
+    this.delivery_time = '15-25';
+    this.img_url = 'https://littlesunnykitchen.com/wp-content/uploads/2020/11/Easy-Pancake-Recipe-2.jpg';
+    this.rating = 4.5;
+  }
 }
 
-let arr=[];
-for (let i = 0; i < 50; i++) { 
-    arr.push(new resName());
-  }
+let arr = [];
+for (let i = 0; i < 2; i++) {
+  arr.push(new resName());
+}
 
-
+arr.push({
+  name : 'Shree Krishna',
+  addr : '43 S 1st St.',
+  avg_cost : 2.49,
+  delivery_time : '15-25',
+  img_url : 'https://littlesunnykitchen.com/wp-content/uploads/2020/11/Easy-Pancake-Recipe-2.jpg',
+  rating : 4.5
+});
 
 export class userhome extends Component {
+  constructor(props){
+    super(props);
+    this.state={
+      query:"",
+      data:arr, //""
+      filteredData:""
+    };
+    this.handleInputChange = this.handleInputChange.bind(this);
+  }
 
+  handleInputChange = (event) => {
+    const query = event.target.value;
+    console.log(event.target.value + " is the event.target.value");
 
-    render() {
-        console.log(arr[0]);
-        let listItems = arr.map((item, num) => {
-            return(
-            // <div key={num}>
-                // {/* <Container style={{display: 'flex', flexDirection: 'row'}}> */}
-                // {/* <Col md={5}> */}
-                    <Card className="m-5 col-md-3">
-                    <Card.Img src="holder.js/100px180" height="55%" width="100%"/>
-                    <Card.Body> 
-                        <Card.Title>{item.name}</Card.Title>
-                        <Card.Text>
-                        Some quick example text to build on the card title and make up the bulk of
-                        the card's content.
-                        </Card.Text>
-                        <Button variant="primary">Check it out</Button>
-                    </Card.Body>
-                    </Card>
-                // {/* </Col> */}
-                // {/* </Container> */}
-                
-            // </div>
-            )     
+    this.setState((prevState) => {
+      const filteredData = prevState.data.filter((element) => {
+        return element.name
+          .toLowerCase()
+          .includes(query.toString().toLowerCase());
+      });
+      console.log("the filtered data is: ")
+      console.log(filteredData)
+      return {
+        query,
+        filteredData,
+      };
+    });
+  };
+
+  // getData=()=>{//make the axios call}
+  componentDidMount(){
+    // this.getData();
+  }
+  render() {
+
+    let searchCode;
+    if (this.state.query.length !== 0)
+    {
+      searchCode = (
+        this.state.filteredData.map((item, num) => {
+          return (
+            <Card className="m-5 col-md-3">
+              <Card.Img src={item.img_url} height="55%" width="55%" />
+              <Card.Body>
+                <Card.Title>{item.name}</Card.Title>
+                <Card.Text>
+                  {item.addr}
+                </Card.Text>
+                <Button variant="primary">Menu</Button>
+                <Button variant="primary">Favourite</Button>
+              </Card.Body>
+            </Card>
+          )
         })
+      );
+    } else{
+      searchCode=this.state.data.map((item, num) => {
         return (
-            <div>
-
-{/* <nav class="navbar navbar-light bg-light">
-  <div class="container-fluid">
-    <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarToggleExternalContent2" aria-controls="navbarToggleExternalContent2" aria-expanded="false" aria-label="Toggle navigation">
-      <b class="fas fa-bars"></b>
-    </button>
-  </div>
-</nav>
-<div class="collapse" id="navbarToggleExternalContent2">
-  <div class="bg-light shadow-3 p-4">
-    <button class="btn btn-link btn-block border-bottom m-0">Link 1</button>
-    <button class="btn btn-link btn-block border-bottom m-0">Link 2</button>
-    <button class="btn btn-link btn-block m-0">Link 3</button>
-  </div>
-</div> */}
-{/* <div>
-    <nav class="navbar navbar-light bg-light">
-        <div class="container-fluid">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-expanded="false" aria-controls="#navbarResponsive">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-			<ul class="navbar-nav ml-auto"> 
-				<li class="nav-item">
-					<a class="nav-link" href="#">Home</a>
-				</li>
-			</ul> 
-		</div>
-        </div>
-    </nav>
-</div>
- */}
-
-{/* <div class="col-9 order-1 text-left mr-auto">
-              
-
-              <span class="d-inline-block d-lg-block"><a href="#" class="text-black site-menu-toggle js-menu-toggle py-5"><span class="icon-menu h3 text-white"></span></a></span>
-
-              
-
-              <nav class="site-navigation text-right ml-auto d-none d-lg-none" role="navigation">
-                <ul class="site-menu main-menu js-clone-nav ml-auto ">
-                  <li class="active"><a href="index.html" class="nav-link">Home</a></li>
-                  <li><a href="about.html" class="nav-link">About</a></li>
-                  <li><a href="services.html" class="nav-link">Services</a></li>
-                  <li><a href="blog.html" class="nav-link">Blog</a></li>
-                  <li><a href="contact.html" class="nav-link">Contact</a></li>
-                </ul>
-              </nav>
-            </div> */}
-                <Navbar />
-
-                This is the user home.
-                
-                <div className="container-fluid padding">
-                {/* in the div of container fluid */}
-                    <div className="row padding" style={{zIndex:30}}>
-                        {/* <CardGroup> */}
-                            {listItems}
-                        {/* </CardGroup> */}
-                    </div>
-                    
-                    
-                </div>
-                </div>            
-           
+          <Card className="m-5 col-md-3">
+            <Card.Img src={item.img_url} height="55%" width="55%" />
+            <Card.Body>
+              <Card.Title>{item.name}</Card.Title>
+              <Card.Text>
+                {item.addr}
+              </Card.Text>
+              <Button variant="primary">Menu</Button>
+              <Button variant="primary">Favourite</Button>
+            </Card.Body>
+          </Card>
         )
+      })
     }
+    
+    return (
+      <div>
+        <Navbar />
+        <div className="container">
+        <div className="row">
+          <div className="col-sm-6 mx-auto">
+            <form>
+              <input
+                style={{ width: "100%", height: "42px" }}
+                placeholder="Enter dish name"
+                value={this.state.query}
+                onChange={this.handleInputChange}
+              />
+            </form>
+          </div>
+        </div>
+      </div>
+        <div className="container-fluid padding">
+          {/* in the div of container fluid */}
+          <div className="row padding" style={{ zIndex: 30 }}>
+            {searchCode}
+          </div>
+        </div>
+      </div>
+    )
+  }
 }
 
 export default userhome
