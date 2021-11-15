@@ -6,6 +6,9 @@ import axios from "axios";
 import { constats } from '../../ip/config';
 import Cookies from "js-cookie";
 import { Link } from 'react-router-dom';
+import Modal from '../../components/modal'
+
+
 // class resName {
 // 	constructor() {
 // 		this.name = 'Subway';
@@ -39,13 +42,24 @@ export class userhome extends Component {
 			data: "", //""
 			filteredData: "",
 			restaurantSuggestions: {},
-			redirectRestoDetails: {}
+			redirectRestoDetails: {},
+			show: false
 		};
 
 		console.log('Inside customer home component');
+		this.showModal = this.showModal.bind(this);
+        this.hideModal = this.hideModal.bind(this);
 		this.handleInputChange = this.handleInputChange.bind(this);
 		this.restoClickHandler = this.restoClickHandler.bind(this);
 	}
+
+	showModal = () => {
+        this.setState({ show: true });
+    };
+
+    hideModal = () => {
+        this.setState({ show: false });
+    };
 
 	handleInputChange = (event) => {
 		const query = event.target.value;
@@ -147,12 +161,58 @@ export class userhome extends Component {
 			});
 		}
 
+		let modal = <div>
+			Some test element
+		</div>;
+		// if (localStorage.getItem('UBER_EATS_CART') || this.state.isCartUpdated) {
+		if (localStorage.getItem('UBER_EATS_CART')) {
+			
+			console.log('Inside localstorage check');
+
+			let cart = JSON.parse(localStorage.getItem('UBER_EATS_CART'));
+			console.log('Cart is : ', cart);
+
+			let itemList = null;
+			modal = <Modal show={true} handleClose={this.hideModal}>
+						<div className="container">
+							<h3>Your cart!</h3>
+							<br />
+							
+							{/* {foodDishList = (eachCategory.dishes).map(eachFoodDish => {
+								return (
+									<div className="food-dish">{eachFoodDish.item_name} <i className="fa fa-shopping-cart addToCartSymbol" id={JSON.stringify(eachFoodDish)} onClick={this.addToCartHandler} style={{fontSize: "24px", float: "right"}}></i></div>
+								);
+							})} */}
+
+							<div>
+								{/* {itemList = (cart.menu_items).map(eachItem => {
+									return (
+										<div id={eachItem} key={eachItem} className="each-item container">
+											<div>{eachItem.item_name} <span className="cartQty"><button id={JSON.stringify(eachItem)} onClick={this.qtyDecrement}> - </button> {eachItem.qty} <button id={JSON.stringify(eachItem)} onClick={this.qtyIncrement}> + </button></span></div>
+										</div>
+									);
+								})} */}
+
+								hello in modal!
+							</div>
+
+							{/* <button id="save-cart" onClick={this.saveCart}>Save cart</button>
+							<button id="checkout" onClick={this.proceedToCheckout}>Proceed to Checkout</button> */}
+						</div>
+					</Modal>;
+
+			console.log('Modal is: ', modal);
+		}
+
 		return (
 			<div>
 				{/* <Navbar /> */}
+				{/* {modal} */}
 				<div className="container">
+				{/* {modal} */}
 					<div className="row">
-						<div className="col-sm-6 mx-auto">
+					{modal}
+						<div className="col-md-10">
 							<form>
 								<input
 									style={{ width: "100%", height: "42px" }}
@@ -161,6 +221,9 @@ export class userhome extends Component {
 									onChange={this.handleInputChange}
 								/>
 							</form>
+						</div>
+						<div className="col-md-2">
+							<button onClick={this.showModal}>CART</button>
 						</div>
 					</div>
 				</div>
