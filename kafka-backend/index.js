@@ -18,7 +18,8 @@ mongoose
 
 console.log("here for kafka");
 
-var login = require("../kafka-backend/kafka/services/login");
+var login = require("../kafka-backend/services/login");
+var placeorder = require("../kafka-backend/services/placeorder");
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------
 function handleTopicRequest(topic_name,fname){
@@ -54,4 +55,5 @@ function handleTopicRequest(topic_name,fname){
 
 // Add your TOPICs here
 handleTopicRequest("test", login);
+handleTopicRequest("palceorder", placeorder);
 // module.exports = config;
