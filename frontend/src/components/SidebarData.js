@@ -32,7 +32,7 @@ export const SidebarData = [
   },
   {
     title: 'Logout',
-    path: '/login',
+    path: '/logout',
     icon: <IoIcons.IoMdPeople />,
     cName: 'nav-text',
     // cookie.remove(CONFIG.UBER_EATS_USER_COOKIE_KEY, { path: '/' }),

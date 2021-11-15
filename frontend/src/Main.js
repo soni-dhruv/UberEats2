@@ -10,6 +10,7 @@ import menu from './components/User/menu';
 import profile from './components/User/profile';
 import favourites from './components/User/favourites';
 import checkout from './components/User/checkout';
+import Logout from './components/Logout';
 
 import addmenu from './components/Restaurant/addmenu';
 import editmenu from './components/Restaurant/editmenu';
@@ -43,6 +44,7 @@ class Main extends Component {
                 <Route path="/restaurant/menu/edit" component={editmenu} />
                 <Route path="/restaurant/home" component={restrohome} />
                 <Route path="/restaurant/orders" component={restrorders} />
+                <Route path="/logout" component={Logout} />
             </div>
         )
     }

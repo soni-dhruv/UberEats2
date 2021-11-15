@@ -55,6 +55,10 @@ mongoose.connect(mongoDB, options, (err, res) => {
 
 //---------------------------------------------------------------- USER's APIS Starts------------------------------------------//
 
+// app.get('/logout', (req, res) => {
+//     Cookies.remove('UE_user_email');
+//     Cookies.remove('UE_usertype');
+// })
 
 //KAFKA DONE
 //User Login

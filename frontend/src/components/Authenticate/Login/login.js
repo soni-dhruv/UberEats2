@@ -80,6 +80,7 @@ class Login extends Component {
     }
 
     render() {
+        
         //redirect based on successful login
         let redirectVar = null;
         // console.log("this.state.userType: ", this.state.userType)
