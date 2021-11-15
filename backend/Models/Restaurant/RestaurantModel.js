@@ -5,11 +5,12 @@ var restroSchema = new Schema({
     email: { type: String, required: true },
     password: { type: String, required: true },
     name: { type: String },
+    phone: { type: String },
     street_address: { type: String },
     city: { type: String },
     state: { type: String },
     zip_code: { type: String },
-    rest_type: { type: String }, // delivery || pickup || delivery and pickup
+    delivery_type: { type: String }, // delivery || pickup || delivery and pickup
     menu: [
         new Schema({
             //category_name: {type: String},

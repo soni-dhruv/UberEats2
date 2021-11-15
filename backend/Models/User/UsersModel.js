@@ -7,14 +7,11 @@ let userSchema = new Schema({
     name: { type: String },
     phone: { type: String },
     address: { type: String },
-    // city: { type: String },
-    // state: { type: String },
-    // zipcode: { type: Number },
-    // country: { type: String },
+    city: { type: String }
 },
     {
         versionKey: false, timestamps: true
     });
 
-const userModel = mongoose.model('User', userSchema);
+const userModel = mongoose.model('Users', userSchema);
 module.exports = userModel;

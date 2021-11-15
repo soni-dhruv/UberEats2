@@ -6,11 +6,8 @@ import { SidebarData } from './SidebarData';
 import '../css/Navbar.css';
 import { IconContext } from 'react-icons';
 import { ReactComponent as Logo } from "../images/uber_eats_logo.svg";
-import SearchBar from './User/SearchBar';
-// import BookData from "../components/User/Data.json";
-import ResData from '../components/User/dummy.json';
 
-  function Navbar() {
+function Navbar() {
   const [sidebar, setSidebar] = useState(false);
   const [x, setX] = useState(0);
   const [codee, setCode] = useState('');
@@ -28,6 +25,7 @@ import ResData from '../components/User/dummy.json';
 
   return (
     <>
+    
       <IconContext.Provider value={{ color: '#000' }}>
         <div class='encompass-navbar'>
           <div className='navbar'>

@@ -4,6 +4,8 @@ import '../../../css/signup.css';
 import axios from 'axios';
 import { constats } from '../../../ip/config';
 import { Redirect, /*Route*/ } from 'react-router';
+// import ReactBootstrap from 'react-bootstrap'
+// import { DropdownButton } from 'ReactBootstrap';
 
 export default class signup_test extends Component {
 
@@ -13,6 +15,9 @@ export default class signup_test extends Component {
             email: "",
             password: "",
             name: "",
+            phone: "",
+            address: "",
+            city: "",
             authFlag: false,
             message: ""
         };
@@ -20,14 +25,13 @@ export default class signup_test extends Component {
         this.emailChangeHandler = this.emailChangeHandler.bind(this);
         this.passwordChangeHandler = this.passwordChangeHandler.bind(this);
         this.nameChangeHandler = this.nameChangeHandler.bind(this);
+        this.phoneChangeHandler = this.phoneChangeHandler.bind(this);
+        this.addressChangeHandler = this.addressChangeHandler.bind(this);
         this.cityChangeHandler = this.cityChangeHandler.bind(this);
-        this.cityChangeHandler = this.cityChangeHandler.bind(this);
-
         this.finalSubmit = this.finalSubmit.bind(this);
     }
 
     emailChangeHandler = (e) => {
-
         this.setState({
             email: e.target.value
         });
@@ -40,6 +44,11 @@ export default class signup_test extends Component {
     nameChangeHandler = (e) => {
         this.setState({
             name: e.target.value
+        });
+    }
+    phoneChangeHandler = (e) => {
+        this.setState({
+            phone: e.target.value
         });
     }
     addressChangeHandler = (e) => {
@@ -58,6 +67,7 @@ export default class signup_test extends Component {
             email: this.state.email,
             password: this.state.password,
             name: this.state.name,
+            phone: this.state.phone,
             address: this.state.address,
             city: this.state.city,
         }
@@ -90,7 +100,6 @@ export default class signup_test extends Component {
             .catch(err => {
                 console.log(err);
                 this.setState({
-
                     authFlag: false,
                     message: 'Details not Stored'
                 })
@@ -104,82 +113,69 @@ export default class signup_test extends Component {
             <div className="container">
                 <div className="form-group">
                     <form>
-                        {/*
-                                    EMAIL
-                        */}
+                        {/* EMAIL*/}
                         <div className="form-group">
                             <div className="panel mb-4 col-sm-4 col-lg-6 col-md-8 offset-md-2 offset-sm-4 offset-lg-3">
                                 <h2>User Login</h2>
                                 <p>Email(required)</p>
-                                <h3>
-                                    {this.state.message}
-                                </h3>
                                 <input type="email" required name="emailid"
                                     className="form-control uberEats-input" onChange={this.emailChangeHandler} />
                             </div>
                         </div>
 
-                        {/*
-                                    Password
-                        */}
+                        {/*Password*/}
                         <div className="col-sm-4 col-lg-6 col-md-8 offset-md-2 offset-sm-4 offset-lg-3">
                             <p>Password</p>
                             <input type="password" required name="password" className="form-control uberEats-input"
                                 onChange={this.PasswordChangeHandler} />
                         </div>
 
-                        {/*
-                                    NAME
-                        */}
+
+
+                        {/*NAME*/}
                         <div className="form-group">
                             <div className="panel mb-4 col-sm-4 col-lg-6 col-md-8 offset-md-2 offset-sm-4 offset-lg-3">
                                 <p>Name</p>
-                                <h3>
-                                    {this.state.name}
-                                </h3>
                                 <input type="name" required name="name"
                                     className="form-control uberEats-input" onChange={this.NameChangeHandler} />
                             </div>
                         </div>
 
-
-                        {/*
-                                    Phone
-                        */}
+                        {/*Phone*/}
                         <div className="form-group">
                             <div className="panel mb-4 col-sm-4 col-lg-6 col-md-8 offset-md-2 offset-sm-4 offset-lg-3">
                                 <p>Phone Number</p>
-                                <h3>
-                                    {this.state.phone}
-                                </h3>
                                 <input type="phone" required name="phone"
                                     className="form-control uberEats-input" onChange={this.PhoneChangeHandler} />
                             </div>
                         </div>
 
+                        {/* <div class="dropdown">
+                        <div className="panel mb-4 col-sm-4 col-lg-6 col-md-8 offset-md-2 offset-sm-4 offset-lg-3">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                Delivery Type
+                            </button>
+                            <div class="dropdown-menu">
+                                <a className="dropdown-item" href="#">Pickup</a>
+                                <a className="dropdown-item" href="#">Delivery</a>
+                                <a className="dropdown-item" href="#">Pickup and Delivery</a>
+                            </div>
+                            </div>
+                        </div> */}
 
-                        {/*
-                                    ADDRESS
-                        */}
+                        {/*ADDRESS*/}
                         <div className="form-group">
                             <div className="panel mb-4 col-sm-4 col-lg-6 col-md-8 offset-md-2 offset-sm-4 offset-lg-3">
                                 <p>Address</p>
-                                <h3>
-                                    {this.state.address}
-                                </h3>
                                 <input type="address" required name="address"
                                     className="form-control uberEats-input" onChange={this.AddressChangeHandler} />
                             </div>
                         </div>
-                        {/*
-                                    CITY
-                        */}
+
+                        {/*CITY*/}
                         <div className="form-group">
                             <div className="panel mb-4 col-sm-4 col-lg-6 col-md-8 offset-md-2 offset-sm-4 offset-lg-3">
                                 <p>City</p>
-                                <h3>
-                                    {this.state.city}
-                                </h3>
                                 <input type="city" required name="city"
                                     className="form-control uberEats-input" onChange={this.CityChangeHandler} />
                             </div>
