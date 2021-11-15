@@ -58,25 +58,15 @@ class Login extends Component {
         //set the with credentials to true
         axios.defaults.withCredentials = true;
 
-        console.log('Calling login api');
-
         //make a post request with the user data
         axios.post(`http://${constats.AWS.ipAddress}:3001/user/login`, data)
             .then(response => {
                 console.log("Status Code : ", response.status);
                 if (response.status === 200) {
-                    
                     this.setState({
                         authFlag: true,
                     })
-                    // const data1 = {
-                    //     email: this.state.email,
-                    //     userType: response.data.userType,
-                    // }
-
                     console.log('Login sucesfully done');
-
-                    // this.props.loginuser(data1); //redux
                 }
             })
             .catch(err => {
