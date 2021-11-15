@@ -29,12 +29,22 @@ class Profile extends Component {
         const data = {
             email: Cookies.get('UE_user_email')
         }
-        axios.post(`http://${constats.AWS.ipAddress}:3001/profile`, data)
+        console.log(data.email)
+        axios.post(`http://${constats.AWS.ipAddress}:3001/user/profile`, data)
             .then((response) => {
                 console.log('Profile details API Response data: ', response.data)
                 this.setState({
-                    profile: response.data
+                    profile: response.data,
+                    email: response.data.email,
+                    city: response.data.city,
+                    name: response.data.name,
+                    phone: response.data.phone,
+                    address: response.data.address
+                }, () => {
+                    console.log("profile data is: " + JSON.stringify(this.state.email));
                 });
+
+                
             }).catch(function (e) {
                 console.error(e.message);
             });
@@ -68,6 +78,28 @@ class Profile extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         console.log("will make an axios call here");
+        console.log("updated city: " + this.state.city);
+        const data = {
+            email: this.state.email,
+            name: this.state.name,
+            phone: this.state.phone,
+            address: this.state.address,
+            city: this.state.city
+        }
+        console.log(data.email)
+        axios.post(`http://${constats.AWS.ipAddress}:3001/user/profile/update`, data)
+            .then((response) => {
+                console.log('Update Profile details API Response data: ', response.data)
+                this.setState({
+                    profile: response.data
+                }, () => {
+                    console.log("profile data is: " + JSON.stringify(this.state.profile));
+                });
+
+                
+            }).catch(function (e) {
+                console.error(e.message);
+            });
     }
 
     render() {
@@ -118,7 +150,7 @@ class Profile extends Component {
             <div className="form-group">
                 <label className="control-label col-sm-2" htmlFor="city">City:</label>
                 <div className="col-sm-3">
-                    <input type="text" className="form-control" id="city" placeholder="City" name="city" value={this.state.profile.city} />
+                    <input type="text" className="form-control" id="city" placeholder="City" onChange={this.cityChangeHandler} name="city" defaultValue={this.state.profile.city} />
                 </div>
             </div>
             <br />

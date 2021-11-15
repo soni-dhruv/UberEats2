@@ -576,8 +576,9 @@ app.get('/user/order/new', (req, res) => {
 });
 
 //Profile Page
-app.get('/user/profile', (req, res) => {
-    User.find({ email: req.query.email })
+app.post('/user/profile', (req, res) => {
+    console.log(req.body.email);
+    User.findOne({ email: req.body.email })
         .then((result) => {
             if (result) {
                 console.log('DB Result: ', result);
@@ -597,7 +598,8 @@ app.get('/user/profile', (req, res) => {
 // KAFKA
 //Profile Page Update
 app.post('/user/profile/update', (req, res) => {
-    const filter = { email: msg.email };
+    console.log("trying to update " + req.body.city);
+    const filter = { email: req.body.email };
     const update = {
         $set: {
             email: req.body.email,
@@ -610,9 +612,12 @@ app.post('/user/profile/update', (req, res) => {
     User.findOneAndUpdate(filter, update, { new: true }, (err, result) => {
         if (err) {
             console.log("error");
-            callback(null, "error");
+            res.status(500).send(err);
+            //callback(null, "error");
         } else {
-            callback(null, result);
+            console.log(result);
+            res.status(200).send(result);
+            //callback(null, result);
         }
     });
 });
