@@ -14,7 +14,7 @@ const restaurantModel = require('../backend/Models/Restaurant/RestaurantModel');
 
 //use cors to allow cross origin resource sharing
 app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
-// app.use(cors({ origin: 'http://localhost:3001', credentials: true }));
+app.use(cors({ origin: 'http://localhost:3001', credentials: true }));
 
 //use express session to maintain session data
 app.use(session({
@@ -169,7 +169,7 @@ app.get('/user/home', async function (req, res) {
                     res.end({ message: "Email id does not exsist" });
                 }
                 else {
-                    console.log("sorted results: " + finalList);
+                    console.log("Sorted results: " + finalList);
                     res.end(result);
                 }
             }
@@ -179,7 +179,6 @@ app.get('/user/home', async function (req, res) {
         console.log(e);
     }
 });
-
 
 app.get('/save-new-rest', (req, res) => {
 
@@ -242,7 +241,6 @@ app.get('/save-new-rest', (req, res) => {
                         description: "Seasoned, curly-cut fried potatoes",
                         price: 4.49,
                         dish_type: 'veg'
-
                     },
                     {
                         item_name: "Large Bacon Ultimate Cheeseburger Combo",

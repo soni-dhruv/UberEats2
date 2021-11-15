@@ -1,55 +1,54 @@
 import React, { Component } from 'react';
 import Navbar from '../Navbar';
-import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import axios from "axios";
-import { constats } from '../../ip/config';
-import Cookies from "js-cookie";
-import { Link } from 'react-router-dom';
+import xy from '../../images/menudish'
 
 class CustomerRestaurant extends Component {
     constructor(props) {
         super(props);
         this.state = {
             restoData: this.props.location.state
-        };
-        console.log('Inside constructor. Restaurant data from redirect is: ', this.props.location.state);
+        };  
+    }
+
+    addToCartHandler = (e) => {
+
+        
+
+        console.log('Inside add to cart handler.', e.target.getAttribute('id'));
+        
+
     }
 
     render() {
-        let restoSuggestionsDiv = null;
-        if (JSON.stringify(this.state.restoData) !== JSON.stringify({})) {
-            restoSuggestionsDiv = this.state.restoSuggestionsDiv.map(restoData => {
-                return (
-                    <Card className="m-5 col-md-3">
-                        <Card.Img src={'https://littlesunnykitchen.com/wp-content/uploads/2020/11/Easy-Pancake-Recipe-2.jpg'} height="55%" width="55%" />
-                        <Card.Body>
-                            <Card.Title>{restoData.name}</Card.Title>
+        let x = Object.values(this.state.restoData).map((res) => {
+            return (
+                Object.values(res.category_items).map((item)=>{
+                    return(
+                        (<Card className="m-5 col-lg-3">
+                        <Card.Img src={xy.link} height="55%" width="55%" />
+                        <Card.Body><center>
+                            <Card.Title>{item.item_name}</Card.Title>
                             <Card.Text>
-                                {restoData.city}
-                                {/* {restoData.menu.category.item_name}
-                                {restoData.menu.category.dish_type}
-                                {restoData.menu.category.price} */}
+                                Price: ${item.price}<br />
+                                Dish Type: {item.dish_type} <br />
+                                Description: {item.description}<br />
+
                             </Card.Text>
-                            {/* <Button id={JSON.stringify(restaurant)} variant="primary" onClick={this.restoClickHandler}>Menu</Button> */}
-                            <Link to={{ pathname: "/customer/restaurant", state: JSON.stringify(restoData) }}>Add to cart</Link>
-                            {/* <Button variant="primary">Favourite</Button> */}
+                            <button id={JSON.stringify(item)} className="btn btn-outline-primary" onClick={this.addToCartHandler}>Add to cart</button></center>
+                            {/* <Link to={{ pathname: "/customer/restaurant", state: JSON.stringify(restaurant) }}>Menu</Link> */}
                         </Card.Body>
-                    </Card>
-                );
-            });
-        }
+                    </Card>)
+                    );
+                })
+            )
+        });
         return (
-            <div>
-                <div>
-                    <div className="container-fluid padding">
-                        <div className="row padding" style={{ zIndex: 30 }}>
-                            {restoSuggestionsDiv}
-                        </div>
-                    </div>
-                </div>
-                {this.state.restoData}
-            </div>
+            <div className="container-fluid padding">
+					<div className="row padding" style={{ zIndex: 30 }}>
+						{x}
+					</div>
+				</div>
         )
     }
 }

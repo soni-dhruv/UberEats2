@@ -28,11 +28,11 @@ function Navbar() {
     
       <IconContext.Provider value={{ color: '#000' }}>
         <div class='encompass-navbar'>
-          <div className='navbar'>
+          <div className='navbar' style={{width:"100%"}}>
             <Link to='#' className='menu-bars'>
               <FaIcons.FaBars className="m-4" onClick={showSidebar} />
             </Link>
-            <Logo />
+            <Logo /><span style={{float: 'right'}}><FaIcons.FaCartPlus />Cart </span> 
             {/* <div className="mt-3 mx-3">
               <SearchBar data={ResData} placeholder="random string" navbarCallBackVar={navbarCallBack} />
             </div> */}
@@ -60,8 +60,8 @@ function Navbar() {
         </nav>
 
         {codee}
-        {/* {alert("Hello! re-rendering parent")} */}
       </IconContext.Provider>
+      <br />
     </>
   );
 }

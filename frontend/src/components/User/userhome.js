@@ -6,37 +6,37 @@ import axios from "axios";
 import { constats } from '../../ip/config';
 import Cookies from "js-cookie";
 import { Link } from 'react-router-dom';
-class resName {
-	constructor() {
-		this.name = 'Subway';
-		this.addr = '43 S 1st St.';
-		this.avg_cost = 2.49;
-		this.delivery_time = '15-25';
-		this.img_url = 'https://littlesunnykitchen.com/wp-content/uploads/2020/11/Easy-Pancake-Recipe-2.jpg';
-		this.rating = 4.5;
-	}
-}
+// class resName {
+// 	constructor() {
+// 		this.name = 'Subway';
+// 		this.addr = '43 S 1st St.';
+// 		this.avg_cost = 2.49;
+// 		this.delivery_time = '15-25';
+// 		this.img_url = 'https://littlesunnykitchen.com/wp-content/uploads/2020/11/Easy-Pancake-Recipe-2.jpg';
+// 		this.rating = 4.5;
+// 	}
+// }
 
-let arr = [];
-for (let i = 0; i < 2; i++) {
-	arr.push(new resName());
-}
+// let arr = [];
+// for (let i = 0; i < 2; i++) {
+// 	arr.push(new resName());
+// }
 
-arr.push({
-	name: 'Shree Krishna',
-	addr: '43 S 1st St.',
-	avg_cost: 2.49,
-	delivery_time: '15-25',
-	img_url: 'https://littlesunnykitchen.com/wp-content/uploads/2020/11/Easy-Pancake-Recipe-2.jpg',
-	rating: 4.5
-});
+// arr.push({
+// 	name: 'Shree Krishna',
+// 	addr: '43 S 1st St.',
+// 	avg_cost: 2.49,
+// 	delivery_time: '15-25',
+// 	img_url: 'https://littlesunnykitchen.com/wp-content/uploads/2020/11/Easy-Pancake-Recipe-2.jpg',
+// 	rating: 4.5
+// });
 
 export class userhome extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			query: "",
-			data: arr, //""
+			data: "", //""
 			filteredData: "",
 			restaurantSuggestions: {},
 			redirectRestoDetails: {}
@@ -114,6 +114,8 @@ export class userhome extends Component {
 	}
 
 	render() {
+		console.log("the state restuarantdata is");
+		console.log(this.state.restaurantSuggestions[0]);
 		console.log('Inside render method | State is: ', this.state);
 		let restoSuggestionsDiv = null;
 		if (JSON.stringify(this.state.restaurantSuggestions) !== JSON.stringify({})) {
@@ -125,8 +127,13 @@ export class userhome extends Component {
 							<Card.Title>{restaurant.name}</Card.Title>
 							<Card.Text>
 								{restaurant.city}
+								
 							</Card.Text>
-							<Link to={{ pathname: "/customer/restaurant", state: JSON.stringify(restaurant) }}>Menu</Link>
+							{console.log("restaurant is in the card is:")}
+								{console.log(restaurant.menu)}
+							{/* <Link to={{ pathname: "/customer/restaurant", state: {restaurant} }}>Menu</Link> */}
+							{/* <Link to="/customer/restaurant" state= {{restaurantt: restaurant}}>Menu</Link> */}
+							<Link to={{ pathname: '/customer/restaurant', state: restaurant.menu }}>Menu</Link>
 						</Card.Body>
 					</Card>
 				);
