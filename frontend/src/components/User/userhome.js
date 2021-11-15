@@ -133,7 +133,14 @@ export class userhome extends Component {
 								{console.log(restaurant.menu)}
 							{/* <Link to={{ pathname: "/customer/restaurant", state: {restaurant} }}>Menu</Link> */}
 							{/* <Link to="/customer/restaurant" state= {{restaurantt: restaurant}}>Menu</Link> */}
-							<Link to={{ pathname: '/customer/restaurant', state: restaurant.menu }}>Menu</Link>
+							<Link to={{ pathname: '/customer/restaurant', state: {
+								menu: restaurant.menu,
+								restaurant_data: {
+									restaurant_id: restaurant._id,
+									restaurant_email: restaurant.email,
+									restaurant_name: restaurant.name
+								}
+							} }}>Menu</Link>
 						</Card.Body>
 					</Card>
 				);
