@@ -66,6 +66,7 @@ class Login extends Component {
                     this.setState({
                         authFlag: true,
                     })
+                    console.log('COOKIE UE_user_email: ', Cookies.get('UE_user_email'));
                     console.log('Login sucesfully done');
                 }
             })

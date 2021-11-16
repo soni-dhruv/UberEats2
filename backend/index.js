@@ -87,7 +87,7 @@ app.post('/user/login1', (req, res) => {
 
 app.post('/user/login', (req, res) => {
     // console.log(req.body);
-    console.log('Inside login api...');
+    console.log('Inside login api... ');
     User.findOne({ email: req.body.email, password: req.body.password }, (error, user) => {
         if (error) {
             res.writeHead(500, {
@@ -632,9 +632,9 @@ app.get('/user/order/new', (req, res) => {
 });
 
 //Profile Page
-app.post('/user/profile', (req, res) => {
-    console.log(req.body.email);
-    User.findOne({ email: req.body.email })
+app.get('/user/profile', (req, res) => {
+    console.log('Inside user profile API | Request body email is: ', req.query.email);
+    User.findOne({ email: req.query.email })
         .then((result) => {
             if (result) {
                 console.log('DB Result: ', result);
