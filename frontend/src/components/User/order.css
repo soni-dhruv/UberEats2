@@ -1,0 +1,105 @@
+.panel-heading .accordion-toggle:after {
+    /* symbol for "opening" panels */
+    font-family: 'Glyphicons Halflings';  /* essential for enabling glyphicon */
+    content: "\e114";    /* adjust as needed, taken from bootstrap.css */
+    float: right;        /* adjust as needed */
+    color: grey;         /* adjust as needed */
+}
+.panel-heading .accordion-toggle.collapsed:after {
+    /* symbol for "collapsed" panels */
+    content: "\e080";    /* adjust as needed, taken from bootstrap.css */
+}
+
+table {
+    border-spacing: 0px;
+    table-layout: fixed;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.mar-bor {
+    /* display: flex;
+    flex-wrap: wrap; */
+    padding-left: 5%;
+    /* margin-left: 200px; */
+}
+
+.heading{
+    font-weight: 700;
+    line-height: 44px;
+    font-size: 36px;
+    color: #000000;
+    margin-bottom: 20px;
+}
+
+.styled-table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    width: 100%;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.styled-table thead tr {
+    background-color: green;
+    color: #ffffff;
+    text-align: left;
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+}
+
+.styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid green;
+}
+
+.styled-table tbody tr.active-row {
+    font-weight: bold;
+    color: #009879;
+}
+
+.select1 {
+    margin-bottom: 5px;
+    width: 150px;
+    height: 35px;
+    padding: 5px 30px 5px 5px;
+    font-size: 18px;
+    border: 1px solid #ccc;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    /* background: url("/uploads/media/default/0001/02/f7b4d3d2ba3fe1d8518e6e63d7740e1e73921abf.png") 96% / 15% no-repeat #eee; */
+  }
+
+  .btn-13 {
+    background: red;
+   color: #fff;
+   z-index: 1;
+ }
+ .btn-13:after {
+   position: absolute;
+   content: "";
+   width: 100%;
+   height: 0;
+   bottom: 0;
+   left: 0;
+   z-index: -1;
+    background: #e0e5ec;
+   transition: all 0.3s ease;
+ }
+ 
+ .btn-13:active {
+   top: 2px;
+ }
+

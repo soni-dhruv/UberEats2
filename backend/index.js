@@ -869,27 +869,29 @@ app.post('/restaurant/addmenu', (req, res) => {
 })
 
 app.post('/restaurant/order/cancelorder', (req, res) => {
-    OrderModel.findOneAndUpdate({_id: req.body.order_id}, {
-        $set: {order_status: "Cancelled"}}, { new: true }, (err,result)=>{
-            if(err){
-                console.log("error is " + err);
-                res.status(500).send("Something went wrong");
-            }else{
-                res.status(200).send("Order cancelled");
-            }
+    OrderModel.findOneAndUpdate({ _id: req.body.order_id }, {
+        $set: { order_status: "Cancelled" }
+    }, { new: true }, (err, result) => {
+        if (err) {
+            console.log("error is " + err);
+            res.status(500).send("Something went wrong");
+        } else {
+            res.status(200).send("Order cancelled");
+        }
     });
 
 });
 
 app.post('/user/order/cancelorder', (req, res) => {
-    OrderModel.findOneAndUpdate({_id: req.body.order_id}, {
-        $set: {order_status: "Cancelled"}}, { new: true }, (err,result)=>{
-            if(err){
-                console.log("error is " + err);
-                res.status(500).send("Something went wrong");
-            }else{
-                res.status(200).send("Order cancelled");
-            }
+    OrderModel.findOneAndUpdate({ _id: req.body.order_id }, {
+        $set: { order_status: "Cancelled" }
+    }, { new: true }, (err, result) => {
+        if (err) {
+            console.log("error is " + err);
+            res.status(500).send("Something went wrong");
+        } else {
+            res.status(200).send("Order cancelled");
+        }
     });
 
 });
@@ -908,14 +910,15 @@ app.post('/user/order/cancelorder', (req, res) => {
 // });
 
 app.post('/user/order/cancelorder', (req, res) => {
-    OrderModel.findOneAndUpdate({_id: req.body.order_id}, {
-        $set: {order_status: "Cancelled"}}, { new: true }, (err,result)=>{
-            if(err){
-                console.log("error is " + err);
-                res.status(500).send("Something went wrong");
-            }else{
-                res.status(200).send("Order cancelled");
-            }
+    OrderModel.findOneAndUpdate({ _id: req.body.order_id }, {
+        $set: { order_status: "Cancelled" }
+    }, { new: true }, (err, result) => {
+        if (err) {
+            console.log("error is " + err);
+            res.status(500).send("Something went wrong");
+        } else {
+            res.status(200).send("Order cancelled");
+        }
     });
 
 });
@@ -956,10 +959,27 @@ app.post('/restaurant/order', (req, res) => {
         })
 })
 
+
+//User orders
+app.post('/user/order', (req, res) => {
+    OrderModel.find({ 'u_email': req.body.email })
+        .then((result) => {
+            if (result) {
+                console.log('Results: ', result);
+            } else {
+                console.log('NO DATA');
+            }
+            res.send(JSON.stringify(result));
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+})
+
 //DONE
 //Restaurant Order Status Update
 app.post('/restaurant/order/update', (req, res) => {
-    OrderModel.findOneAndUpdate({ r_email: req.body.r_email, u_email: req.body.u_email }, { order_status: req.body.order_status }, { new: true })
+    OrderModel.findOneAndUpdate({ _id: req.body.order_id}, { order_status: req.body.order_status }, { new: true })
         .then((result) => {
             if (result) {
                 console.log('Results: ', result);

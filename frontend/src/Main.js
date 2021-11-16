@@ -5,7 +5,7 @@ import login from './components/Authenticate/Login/login';
 import signup_test from './components/Authenticate/Signup/signup_test';
 
 import userhome from './components/User/userhome';
-import userorder from './components/User/userorder';
+import Orders from './components/User/Orders';
 import menu from './components/User/menu';
 import profile from './components/User/profile';
 import favourites from './components/User/favourites';
@@ -32,7 +32,7 @@ class Main extends Component {
                 <Route path="/signup" component={signup_test} />
                 {/* <Route path="/signup/name" component={signup_test} /> */}
                 <Route path="/userhome" component={userhome} />
-                <Route path="/userorder" component={userorder} />
+                <Route path="/userorder" component={Orders} />
                 <Route path="/menu" component={menu} />
                 <Route path="/profile" component={profile} />
                 <Route path="/favourites" component={favourites} />
