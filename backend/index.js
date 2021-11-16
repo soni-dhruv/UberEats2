@@ -120,53 +120,53 @@ app.post('/user/login', (req, res) => {
 app.post('/user/placeOrder', (req, res) => {
 
 
-    // console.log(req.body);
-    // kafka.make_request("placeOrder", req.body, function (err, results) {
-    //     if (err) {
-    //         console.log("Inside err");
-    //         res.json({
-    //             status: "error",
-    //             msg: "System Error, Try Again.",
-    //         });
-    //     }
-    //     else {
-    //         console.log("Inside router post");
-    //         console.log(results);
-    //         res.status(200).send(results);
-    //     }
-    // });
-
-
     console.log(req.body);
-    console.log('Inside place order api...');
-
-    let newOrder = new OrderModel({
-        u_email : req.body.email,
-        r_email : req.body.restaurant_email,
-        r_name : req.body.restaurant_name,
-        order_status : req.body.order_status,
-        order_type : req.body.order_type,
-        delivery_address : req.body.delivery_address,
-        instruction: req.body.instruction,
-        bill : req.body.bill,
-        item : req.body.items
-    })
-
-    newOrder.save((err, order) => {
+    kafka.make_request("palceorder", req.body, function (err, results) {
         if (err) {
-            console.log(err);
-            res.writeHead(500, {
-                'Content-Type': 'text/plain'
-            })
-            res.end("Error Occured");
-        } else {
-            res.writeHead(200, {
-                'Content-Type': 'text/plain'
-            })
-            console.log("User login api 200 status",order)
-            res.end("order");
+            console.log("Inside err");
+            res.json({
+                status: "error",
+                msg: "System Error, Try Again.",
+            });
         }
-    }); 
+        else {
+            console.log("Inside router post");
+            console.log(results);
+            res.status(200).send(results);
+        }
+    });
+
+
+    // console.log(req.body);
+    // console.log('Inside place order api...');
+
+    // let newOrder = new OrderModel({
+    //     u_email : req.body.email,
+    //     r_email : req.body.restaurant_email,
+    //     r_name : req.body.restaurant_name,
+    //     order_status : req.body.order_status,
+    //     order_type : req.body.order_type,
+    //     delivery_address : req.body.delivery_address,
+    //     instruction: req.body.instruction,
+    //     bill : req.body.bill,
+    //     item : req.body.items
+    // })
+
+    // newOrder.save((err, order) => {
+    //     if (err) {
+    //         console.log(err);
+    //         res.writeHead(500, {
+    //             'Content-Type': 'text/plain'
+    //         })
+    //         res.end("Error Occured");
+    //     } else {
+    //         res.writeHead(200, {
+    //             'Content-Type': 'text/plain'
+    //         })
+    //         console.log("User login api 200 status",order)
+    //         res.end("order");
+    //     }
+    // }); 
 })
 
 
