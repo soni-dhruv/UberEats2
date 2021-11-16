@@ -25,12 +25,12 @@ class Profile extends Component {
     }
 
     componentDidMount() {
-        console.log("Inside did mount");
+        console.log("Inside did mount",Cookies.get('UE_user_email'));
         const data = {
             email: Cookies.get('UE_user_email')
         }
         console.log(data.email)
-        axios.post(`http://${constats.AWS.ipAddress}:3001/user/profile`, data)
+        axios.get(`http://${constats.AWS.ipAddress}:3001/user/profile`, { params: { email: Cookies.get('UE_user_email') } })
             .then((response) => {
                 console.log('Profile details API Response data: ', response.data)
                 this.setState({
