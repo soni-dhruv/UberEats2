@@ -6,11 +6,13 @@ import { SidebarData } from './SidebarData';
 import '../css/Navbar.css';
 import { IconContext } from 'react-icons';
 import { ReactComponent as Logo } from "../images/uber_eats_logo.svg";
+// import Modal from './modal.js';
 
 function Navbar() {
   const [sidebar, setSidebar] = useState(false);
   const [x, setX] = useState(0);
   const [codee, setCode] = useState('');
+  // let [show] = useState(false);
 
   const showSidebar = () => setSidebar(!sidebar);
 
@@ -23,7 +25,12 @@ function Navbar() {
     setCode(childData);
   }
 
+  
+
   return (
+
+    
+
     <>
     
       <IconContext.Provider value={{ color: '#000' }}>
@@ -32,7 +39,7 @@ function Navbar() {
             <Link to='#' className='menu-bars'>
               <FaIcons.FaBars className="m-4" onClick={showSidebar} />
             </Link>
-            <Logo /><span style={{float: 'right'}}><FaIcons.FaCartPlus />Cart </span> 
+            <Logo /><span style={{float: 'right'}}><FaIcons.FaCartPlus /></span> 
             {/* <div className="mt-3 mx-3">
               <SearchBar data={ResData} placeholder="random string" navbarCallBackVar={navbarCallBack} />
             </div> */}
@@ -58,6 +65,10 @@ function Navbar() {
             })}
           </ul>
         </nav>
+
+        <div>
+          {/* {modal} */}
+        </div>
 
         {codee}
       </IconContext.Provider>
