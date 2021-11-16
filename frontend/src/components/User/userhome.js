@@ -400,7 +400,7 @@ export class userhome extends Component {
 								<button onClick={this.search}>Search</button>
 							</div>
 							<div className="col-md-2">
-								<button onClick={this.search}>Search</button>
+								<button onClick={this.showCart}>Cart</button>
 							</div>
 						</div>
 					</div>

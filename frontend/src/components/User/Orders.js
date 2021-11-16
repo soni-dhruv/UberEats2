@@ -34,8 +34,8 @@ export class Orders extends Component {
 
     componentDidMount() {
         const data = {
-            // email: Cookies.get('UE_user_email')
-            email : "jackinthebox.sanjose@jackinthebox.com"
+            email: Cookies.get('UE_user_email')
+            // email : "jackinthebox.sanjose@jackinthebox.com"
         }
         console.log("going for order here");
         axios.defaults.headers.common['authorization'] = (localStorage.getItem('token'));

@@ -236,7 +236,7 @@ class PlaceOrder extends Component {
             r_email: cart.restaurant_email,
             restaurant_id: cart.restaurant_id,
             bill: parseFloat(parseFloat(this.state.priceDistribution.subtotal) + parseFloat(this.state.priceDistribution.deliveryFee) + parseFloat(this.state.priceDistribution.serviceFee) + parseFloat(this.state.priceDistribution.caDriverBenefits) + parseFloat(this.state.priceDistribution.taxes)).toFixed(2),
-            order_status: 'order_received',
+            order_status: 'new',
             inst : this.state.inst,
             item: orderItemsArray,
 
