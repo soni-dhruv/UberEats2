@@ -654,28 +654,47 @@ app.post('/user/profile', (req, res) => {
 // KAFKA
 //Profile Page Update
 app.post('/user/profile/update', (req, res) => {
-    console.log("trying to update " + req.body.city);
-    const filter = { email: req.body.email };
-    const update = {
-        $set: {
-            email: req.body.email,
-            name: req.body.name,
-            phone: req.body.phone,
-            address: req.body.address,
-            city: req.body.city,
-        }
-    };
-    User.findOneAndUpdate(filter, update, { new: true }, (err, result) => {
+
+
+    console.log(req.body);
+    kafka.make_request("updateUser", req.body, function (err, results) {
         if (err) {
-            console.log("error");
-            res.status(500).send(err);
-            //callback(null, "error");
-        } else {
-            console.log(result);
-            res.status(200).send(result);
-            //callback(null, "error");
+            console.log("Inside err");
+            res.json({
+                status: "error",
+                msg: "System Error, Try Again.",
+            });
+        }
+        else {
+            console.log("Inside router post");
+            console.log(results);
+            res.status(200).send(results);
         }
     });
+
+
+    // console.log("trying to update " + req.body.city);
+    // const filter = { email: req.body.email };
+    // const update = {
+    //     $set: {
+    //         email: req.body.email,
+    //         name: req.body.name,
+    //         phone: req.body.phone,
+    //         address: req.body.address,
+    //         city: req.body.city,
+    //     }
+    // };
+    // User.findOneAndUpdate(filter, update, { new: true }, (err, result) => {
+    //     if (err) {
+    //         console.log("error");
+    //         res.status(500).send(err);
+    //         //callback(null, "error");
+    //     } else {
+    //         console.log(result);
+    //         res.status(200).send(result);
+    //         //callback(null, "error");
+    //     }
+    // });
 });
 
 //Receipt

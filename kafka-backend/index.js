@@ -20,6 +20,7 @@ console.log("here for kafka");
 
 var login = require("../kafka-backend/services/login");
 var placeorder = require("../kafka-backend/services/placeorder");
+var updateUser = require("../kafka-backend/services/updateUser");
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------
 function handleTopicRequest(topic_name,fname){
@@ -56,4 +57,6 @@ function handleTopicRequest(topic_name,fname){
 // Add your TOPICs here
 handleTopicRequest("test", login);
 handleTopicRequest("palceorder", placeorder);
+handleTopicRequest("updateUser", updateUser);
+
 // module.exports = config;
