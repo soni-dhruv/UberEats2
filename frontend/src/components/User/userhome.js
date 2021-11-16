@@ -43,41 +43,43 @@ export class userhome extends Component {
 			filteredData: "",
 			restaurantSuggestions: {},
 			redirectRestoDetails: {},
-			show: false
+			show: false,
+
 		};
 
 		console.log('Inside customer home component');
 		this.showModal = this.showModal.bind(this);
-        this.hideModal = this.hideModal.bind(this);
+		this.hideModal = this.hideModal.bind(this);
 		this.handleInputChange = this.handleInputChange.bind(this);
 		this.restoClickHandler = this.restoClickHandler.bind(this);
 	}
 
 	showModal = () => {
-        this.setState({ show: true });
-    };
+		this.setState({ show: true });
+	};
 
-    hideModal = () => {
-        this.setState({ show: false });
-    };
+	hideModal = () => {
+		this.setState({ show: false });
+	};
 
 	handleInputChange = (event) => {
-		const query = event.target.value;
-		console.log(event.target.value + " is the event.target.value");
 
-		this.setState((prevState) => {
-			const filteredData = prevState.data.filter((element) => {
-				return element.name
-					.toLowerCase()
-					.includes(query.toString().toLowerCase());
-			});
-			console.log("the filtered data is: ")
-			console.log(filteredData)
-			return {
-				query,
-				filteredData,
-			};
-		});
+		this.setState({
+			query: event.target.value
+		})
+		// this.setState(() => {
+		// 	const filteredData = this.state.restaurantSuggestions.filter((element) => {
+		// 		return element.name
+		// 			.toLowerCase()
+		// 			.includes(query.toString().toLowerCase());
+		// 	});
+		// 	console.log("the filtered data is: ")
+		// 	console.log(filteredData)
+		// 	return {
+		// 		query,
+		// 		filteredData,
+		// 	};
+		// });
 	};
 
 	restoClickHandler = (e) => {
@@ -128,6 +130,26 @@ export class userhome extends Component {
 			});
 	}
 
+	search = e => {
+		e.preventDefault();
+		let data = {
+			general_search_string: this.state.query
+		}
+
+		console.log("going for order update", data);
+		axios.post(`http://${constats.AWS.ipAddress}:3001/user/order`, data)
+			.then(response => {
+				console.log(response.data);
+				this.setState({
+					restaurantSuggestions: response.data
+				});
+				// console.log("!@!@!@!@!@!", this.state.order_list.length);
+			})
+			.catch(err => {
+
+			});
+	}
+
 	render() {
 		console.log("the state restuarantdata is");
 		console.log(this.state.restaurantSuggestions[0]);
@@ -142,20 +164,22 @@ export class userhome extends Component {
 							<Card.Title>{restaurant.name}</Card.Title>
 							<Card.Text>
 								{restaurant.city}
-								
+
 							</Card.Text>
 							{console.log("restaurant is in the card is:")}
-								{console.log(restaurant.menu)}
+							{console.log(restaurant.menu)}
 							{/* <Link to={{ pathname: "/customer/restaurant", state: {restaurant} }}>Menu</Link> */}
 							{/* <Link to="/customer/restaurant" state= {{restaurantt: restaurant}}>Menu</Link> */}
-							<Link to={{ pathname: '/customer/restaurant', state: {
-								menu: restaurant.menu,
-								restaurant_data: {
-									restaurant_id: restaurant._id,
-									restaurant_email: restaurant.email,
-									restaurant_name: restaurant.name
+							<Link to={{
+								pathname: '/customer/restaurant', state: {
+									menu: restaurant.menu,
+									restaurant_data: {
+										restaurant_id: restaurant._id,
+										restaurant_email: restaurant.email,
+										restaurant_name: restaurant.name
+									}
 								}
-							} }}>Menu</Link>
+							}}>Menu</Link>
 						</Card.Body>
 					</Card>
 				);
@@ -167,7 +191,7 @@ export class userhome extends Component {
 		</div>;
 		// if (localStorage.getItem('UBER_EATS_CART') || this.state.isCartUpdated) {
 		if (localStorage.getItem('UBER_EATS_CART')) {
-			
+
 			console.log('Inside localstorage check');
 
 			let cart = JSON.parse(localStorage.getItem('UBER_EATS_CART'));
@@ -175,18 +199,18 @@ export class userhome extends Component {
 
 			let itemList = null;
 			modal = <Modal show={true} handleClose={this.hideModal}>
-						<div className="container">
-							<h3>Your cart!</h3>
-							<br />
-							
-							{/* {foodDishList = (eachCategory.dishes).map(eachFoodDish => {
+				<div className="container">
+					<h3>Your cart!</h3>
+					<br />
+
+					{/* {foodDishList = (eachCategory.dishes).map(eachFoodDish => {
 								return (
 									<div className="food-dish">{eachFoodDish.item_name} <i className="fa fa-shopping-cart addToCartSymbol" id={JSON.stringify(eachFoodDish)} onClick={this.addToCartHandler} style={{fontSize: "24px", float: "right"}}></i></div>
 								);
 							})} */}
 
-							<div>
-								{/* {itemList = (cart.menu_items).map(eachItem => {
+					<div>
+						{/* {itemList = (cart.menu_items).map(eachItem => {
 									return (
 										<div id={eachItem} key={eachItem} className="each-item container">
 											<div>{eachItem.item_name} <span className="cartQty"><button id={JSON.stringify(eachItem)} onClick={this.qtyDecrement}> - </button> {eachItem.qty} <button id={JSON.stringify(eachItem)} onClick={this.qtyIncrement}> + </button></span></div>
@@ -194,13 +218,13 @@ export class userhome extends Component {
 									);
 								})} */}
 
-								hello in modal!
-							</div>
+						hello in modal!
+					</div>
 
-							{/* <button id="save-cart" onClick={this.saveCart}>Save cart</button>
+					{/* <button id="save-cart" onClick={this.saveCart}>Save cart</button>
 							<button id="checkout" onClick={this.proceedToCheckout}>Proceed to Checkout</button> */}
-						</div>
-					</Modal>;
+				</div>
+			</Modal>;
 
 			console.log('Modal is: ', modal);
 		}
@@ -210,18 +234,18 @@ export class userhome extends Component {
 				{/* <Navbar /> */}
 				{/* {modal} */}
 				<div className="container">
-				{/* {modal} */}
+					{/* {modal} */}
 					<div className="row">
-					{modal}
+						{modal}
 						<div className="col-md-10">
-							<form>
-								<input
-									style={{ width: "100%", height: "42px" }}
-									placeholder="Search here"
-									value={this.state.query}
-									onChange={this.handleInputChange}
-								/>
-							</form>
+							<input
+								style={{ width: "100%", height: "42px" }}
+								placeholder="Search here"
+								value={this.state.query}
+								onChange={this.handleInputChange}
+							/>
+
+							<button onClick={this.search}>Search</button>
 						</div>
 						<div className="col-md-2">
 							<button onClick={this.showModal}>CART</button>

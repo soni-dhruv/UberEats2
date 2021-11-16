@@ -13,7 +13,7 @@ var restroSchema = new Schema({
     delivery_type: { type: String }, // delivery || pickup || delivery and pickup
     menu: [
         new Schema({
-            //category_name: {type: String},
+            category_name: {type: String},
             category_items: [
                 new Schema({
                     //  item_id: {type: Number},

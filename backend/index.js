@@ -455,10 +455,11 @@ app.get('/update-doc111', (req, res) => {
         })
 })
 
+
 // User Search Bar
-app.get('/user/order', (req, res) => {
-    let searchStringRegex = new RegExp(req.query.general_search_string, "i");
-    User.find({
+app.post('/user/order', (req, res) => {
+    let searchStringRegex = new RegExp(req.body.general_search_string, "i");
+    RestaurantModel.find({
         $or: [
             { name: searchStringRegex },
             { city: searchStringRegex },
@@ -512,7 +513,7 @@ app.get('/user/restaurant_suggestions', (req, res) => {
         console.log('City param received in restaurant_suggestions api input...');
         let citySearchStringRegex = new RegExp(req.query.city, "i");
 
-        RestaurantModel.find({ city: citySearchStringRegex })
+        RestaurantModel.find({})
             .then((result) => {
                 if (result) {
                     console.log('DATA FOUND: ', result);
