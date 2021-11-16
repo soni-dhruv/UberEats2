@@ -90,15 +90,16 @@ export class userhome extends Component {
 	componentDidMount() {
 
 		console.log('Inside userhome did mount');
+		console.log('Email in cookie: ', Cookies.get('UE_user_email'));
 		axios.get(`http://${constats.AWS.ipAddress}:3001/user/profile`, { params: { email: Cookies.get('UE_user_email') } })
 			.then((response) => {
 
 				if (response.status === 200) {
 
-					console.log('Profile details API Response data for customer home page: ', response.data[0])
+					console.log('Profile details API Response data for customer home page: ', response.data)
 
 					this.setState({
-						profileDetails: response.data[0]
+						profileDetails: response.data
 					});
 
 					if (JSON.stringify(this.state.profileDetails) !== JSON.stringify({})) {
