@@ -36,11 +36,10 @@ export class RestOrder extends Component {
     componentDidMount() {
         const data = {
             // email: Cookies.get('UE_user_email')
-            email : "jackinthebox.sanjose@jackinthebox.com"
+            email : "aff@sfdsf.com"
         }
         console.log("going for order here");
-        axios.defaults.headers.common['authorization'] = (localStorage.getItem('token'));
-        axios.post(`http://${constats.AWS.ipAddress}:3001/user/order`, data)
+        axios.post(`http://${constats.AWS.ipAddress}:3001/rest/order`, data)
             .then(response => {
                 this.setState({
                     order_list: (response.data),
@@ -105,7 +104,7 @@ export class RestOrder extends Component {
         axios.post(`http://${constats.AWS.ipAddress}:3001/restaurant/order/update`, data)
             .then(response => {
                 console.log(response.data);
-                (this.props.history.push("/userhome"))
+                // (this.props.history.push("/userhome"))
                 this.setState({
                     status: true,
                 });
@@ -129,7 +128,7 @@ export class RestOrder extends Component {
         axios.post(`http://${constats.AWS.ipAddress}:3001/restaurant/order/update`, data)
             .then(response => {
                 console.log(response.data);
-                (this.props.history.push("/userhome"))
+                // (this.props.history.push("/userhome"))
                 this.setState({
                     status: true,
                 });

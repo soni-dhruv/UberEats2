@@ -11,7 +11,7 @@ import profile from './components/User/profile';
 import favourites from './components/User/favourites';
 import checkout from './components/User/checkout';
 import Logout from './components/Logout';
-
+import RestOrder from './components/User/RestOrder';
 import addmenu from './components/Restaurant/addmenu';
 import editmenu from './components/Restaurant/editmenu';
 import restrohome from './components/Restaurant/restrohome';
@@ -38,7 +38,7 @@ class Main extends Component {
                 <Route path="/favourites" component={favourites} />
                 <Route path="/checkout" component={checkout} />
                 <Route path="/customer/restaurant" component={CustomerRestaurant} />
-
+                <Route path="/rest/order" component={RestOrder} />
                 <Route path="/restaurant/login" component={restrologin} />
                 <Route path="/restaurant/signup" component={restrosignup} />
                 <Route path="/restaurant/menu/edit" component={editmenu} />

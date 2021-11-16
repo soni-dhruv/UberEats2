@@ -457,7 +457,7 @@ app.get('/update-doc111', (req, res) => {
 
 
 // User Search Bar
-app.post('/user/order', (req, res) => {
+app.post('/user/search', (req, res) => {
     let searchStringRegex = new RegExp(req.body.general_search_string, "i");
     RestaurantModel.find({
         $or: [
@@ -502,6 +502,28 @@ app.get('/user/order', (req, res) => {
                 })
                 console.log(JSON.stringify("Order Data retrived!", order));
                 res.end(JSON.stringify("Order placed retrived!", order));
+            }
+        });
+});
+
+
+app.post('/rest/order', (req, res) => {
+    console.log(req.body.email);
+    OrderModel.find({ "r_email": req.body.email }, 
+        { r_name: 1, order_status: 1, order_type: 1, delivery_address: 1, instruction: 1, bill: 1, item: 1 },
+        (error, order) => {
+            if (error) {
+                res.writeHead(500, {
+                    'Content-Type': 'text/plain'
+                })
+                res.end();
+            }
+            else {
+                res.writeHead(200, {
+                    'Content-Type': 'text/plain'
+                })
+                console.log((order));
+                res.end(JSON.stringify(order));
             }
         });
 });

@@ -137,7 +137,7 @@ export class userhome extends Component {
 		}
 
 		console.log("going for order update", data);
-		axios.post(`http://${constats.AWS.ipAddress}:3001/user/order`, data)
+		axios.post(`http://${constats.AWS.ipAddress}:3001/user/search`, data)
 			.then(response => {
 				console.log(response.data);
 				this.setState({
