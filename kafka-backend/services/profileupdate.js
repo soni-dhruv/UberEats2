@@ -1,6 +1,6 @@
 "use strict";
 var express = require('express');
-const User = require('../../Models/User/UsersModel');
+const User = require('../Models/User/UsersModel');
 
 function handle_request(msg, callback) {
     const filter = { email: msg.email };
