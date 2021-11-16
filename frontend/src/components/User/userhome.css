@@ -1,0 +1,21 @@
+#cart-div {
+    border: 1px solid grey;
+    position: relative;
+    padding: 25px;
+    margin: 25px;
+}
+
+#cart-close-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 10px;
+}
+
+.each-item {
+    padding: 25px;
+}
+
+.cartQty {
+    float: right;
+}

@@ -1,0 +1,182 @@
+.placeOrderSection {
+    background-color: #EDEDED;
+    padding: 50px;
+}
+
+.itemListSection {
+    background-color: white;
+}
+
+#place-order {
+    width: 100%;
+    padding: 10px;
+    border: 0px;
+    background-color: #478807;
+    color: white;
+}
+
+#warning-instruction-1 {
+    margin-top: 10px;
+    font-size: 0.75em;
+    color: #666666;
+    word-spacing: 0.8px;
+}
+
+#warning-instruction-2 {
+    font-size: 0.9em;
+    color: #666666;
+    word-spacing: 0.8px;
+}
+
+.orderSectionDivider {
+    background-color: blue;
+}
+
+#placeorder-box-1 {
+    padding-bottom: 8px;
+    border-bottom: 1px solid #BEBEBE;
+    margin-bottom: 10px;
+}
+
+#priceValue {
+    float: right;
+}
+
+#placeorder-box-2-each-row {
+    padding: 5px 0px;
+    border-bottom: 1px solid #BEBEBE;
+}
+
+#placeorder-box-3 {
+    margin-top: 10px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #BEBEBE;
+}
+
+.tip-box {
+    padding: 12px;
+    border-radius: 20px;
+    background-color: white;
+    border: 0px;
+}
+
+.tip-box:hover {
+    background-color: black;
+    color: white;
+}
+
+.tip-box:active {
+    background-color: black;
+    color: white;
+}
+
+/* .tip-box:enabled {
+    background-color: black;
+    color: white;
+} */
+
+#tip-main-box {
+    padding-top: 5px;
+}
+
+#totalPriceValue {
+    float: right;
+}
+
+#placeorder-box-4 {
+    padding-top: 15px;
+    font-size: 1.2em;
+}
+
+.item-list-box {
+    /* margin-top: 5px;
+    margin-bottom: 5px; */
+    padding: 18px 15px 15px 15px;
+    font-size: 1.2em;
+    border-bottom: 1px solid #BEBEBE;
+    /* border: 1px solid grey; */
+}
+
+.editBtn {
+    border: 0px;
+    /* margin-top: 0px; */
+    /* padding-top: 0px; */
+    /* padding-top: 0px; */
+    padding: 7px 20px 10px 20px;
+    border-radius: 18px;
+    /* padding: 10px; */
+    /* position: relative; */
+    /* margin-bottom: 10px; */
+}
+
+.editBtn:hover {
+    color: white;
+    background-color: black;
+}
+
+#main-items-box {
+    margin: 15px;
+}
+
+#addItemBtn {
+    border-radius: 18px;
+    padding: 7px 20px 10px 20px;
+    font-size: 0.8em;
+    border: 0px;
+}
+
+#main-items-box-1 {
+    margin: 20px 5px;
+    border: 1px solid grey;
+    padding: 15px;
+}
+
+.incrDecr {
+    border: 0px;
+}
+
+.item-name {
+    margin-left: 10px;
+}
+
+.eachItemRow {
+    /* margin: 5px; */
+    padding: 10px;
+    font-size: 1.1em;
+    /* border: 1px solid grey; */
+}
+
+.itemPrice {
+    float: right;
+}
+
+.temp {
+    padding: 30px;
+}
+
+.order-status-box {
+    border: 1px solid grey;
+    padding: 15px;
+    margin-top: 10px
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

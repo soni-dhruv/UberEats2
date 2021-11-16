@@ -9,13 +9,13 @@ function handle_request(msg, callback) {
     console.log('Inside place order api...');
 
     let newOrder = new Order({
-        u_email: msg.username,
-        r_email: msg.rest_email,
+        u_email: msg.u_email,
+        r_email: msg.r_email,
         r_name: msg.r_name,
         order_status: msg.order_status,
         order_type: msg.order_type,
         delivery_address: msg.delivery_address,
-        instruction: msg.instruction,
+        instruction: msg.inst,
         bill: msg.bill,
         item: msg.item
     })
@@ -28,9 +28,10 @@ function handle_request(msg, callback) {
             // res.writeHead(200, {
             //     'Content-Type': 'text/plain'
             // })
-            console.log("User login api 200 status", order)
+            console.log('Place order response data: ', order);
+            console.log("User login api 200 status", order._id)
 
-            callback(null, "login api 200 status");
+            callback(null, order);
         }
     });
     console.log("after callback");

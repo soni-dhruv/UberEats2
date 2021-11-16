@@ -6,8 +6,9 @@ import axios from "axios";
 import { constats } from '../../ip/config';
 import Cookies from "js-cookie";
 import { Link } from 'react-router-dom';
-import Modal from '../../components/modal'
-
+import Modal from '../../components/modal';
+import './userhome.css';
+import { Redirect } from 'react-router-dom';
 
 // class resName {
 // 	constructor() {
@@ -43,16 +44,34 @@ export class userhome extends Component {
 			filteredData: "",
 			restaurantSuggestions: {},
 			redirectRestoDetails: {},
-			show: false
+			show: false,
+			showcart: true,
+			checkoutBtnClicked: false
 		};
 
 		console.log('Inside customer home component');
 		this.showModal = this.showModal.bind(this);
         this.hideModal = this.hideModal.bind(this);
+		this.hideCart = this.hideCart.bind(this);
+		this.showCart = this.showCart.bind(this);
+		this.qtyIncrement = this.qtyIncrement.bind(this);
+        this.qtyDecrement = this.qtyDecrement.bind(this);
 		this.handleInputChange = this.handleInputChange.bind(this);
 		this.restoClickHandler = this.restoClickHandler.bind(this);
 	}
 
+	showCart = () => {
+		this.setState({
+			showcart: true
+		});
+	}
+
+	hideCart = () => {
+		this.setState({
+			showcart: false
+		});
+	}
+	
 	showModal = () => {
         this.setState({ show: true });
     };
@@ -60,6 +79,14 @@ export class userhome extends Component {
     hideModal = () => {
         this.setState({ show: false });
     };
+
+	proceedToCheckout = () => {
+        // console.log('Proceed to checkout button clicked');
+        this.setState({
+            checkoutBtnClicked: true
+        });
+        // this.hideModal();
+    }
 
 	handleInputChange = (event) => {
 		const query = event.target.value;
@@ -79,6 +106,86 @@ export class userhome extends Component {
 			};
 		});
 	};
+
+	qtyIncrement = (e) => {
+        
+        // store.subscribe(() => console.log('######### NAVBAR | REDUX STORE STATE: ', store.getState()));
+
+        // console.log("Hello qtyIncrement");
+        // console.log('@@@@@@@@@@@@########## REDUX : ', store.getState());
+        // console.log("Hello qtyIncrement1111");
+
+        let itemClicked = JSON.parse(e.target.getAttribute('id'));
+        console.log('Received qtyIncrement action for item: ', itemClicked);
+        // console.log("Hello qtyIncrement1111");
+
+        let oldQty = itemClicked.qty;
+        let cart = JSON.parse(localStorage.getItem('UBER_EATS_CART'));
+        let newCartMenuItems = []
+
+        cart.items.map((eachItem) => {
+            
+            let updatedItem = {
+                ...eachItem
+            }
+            if (eachItem._id == itemClicked._id) {
+                updatedItem.qty = oldQty + 1
+            }
+
+            newCartMenuItems.push(updatedItem);
+
+            console.log("%%%%%%%%% UPDATED ITEM: ", updatedItem);
+            
+            return eachItem;
+        });
+
+        let newCart = {...cart, items: newCartMenuItems};
+        localStorage.setItem('UBER_EATS_CART', JSON.stringify(newCart));
+        console.log('NEW CART set in localStorage is: ', JSON.stringify(newCart));
+
+        this.setState({isCartUpdated: true});
+    }
+
+    qtyDecrement = (e) => {
+
+        let itemClicked = JSON.parse(e.target.getAttribute('id'));
+        console.log('Received qtyDecrement action for item: ', itemClicked);
+
+        let oldQty = itemClicked.qty;
+        let newQty = oldQty - 1;
+
+        let cart = JSON.parse(localStorage.getItem('UBER_EATS_CART'));
+        let newCartMenuItems = []
+        
+        cart.items.map((eachItem) => {
+            
+            let updatedItem = {
+                ...eachItem
+            }
+            if (eachItem._id == itemClicked._id) {
+                updatedItem.qty = newQty
+            }
+
+            if (updatedItem.qty !== 0) {
+                newCartMenuItems.push(updatedItem);
+            }
+
+            console.log("%%%%%%%%% UPDATED ITEM: ", updatedItem);
+            
+            return eachItem;
+        });
+
+        if (newCartMenuItems.length === 0) {
+            localStorage.removeItem('UBER_EATS_CART');
+            console.log('CART IS NOW EMPTY');
+        } else {
+            let newCart = {...cart, items: newCartMenuItems};
+            localStorage.setItem('UBER_EATS_CART', JSON.stringify(newCart));
+            console.log('NEW CART set in localStorage is: ', JSON.stringify(newCart));
+        }
+        
+        this.setState({isCartUpdated: true});
+    }
 
 	restoClickHandler = (e) => {
 		console.log('Inside resto click handler');
@@ -162,9 +269,41 @@ export class userhome extends Component {
 			});
 		}
 
-		let modal = <div>
-			Some test element
-		</div>;
+		let cartDiv = null;
+		let itemList = null;
+		if (localStorage.getItem('UBER_EATS_CART')) {
+
+			console.log('Inside localstorage check 1111');
+
+			let cart = JSON.parse(localStorage.getItem('UBER_EATS_CART'));
+			console.log('Cart is : ', cart);
+			
+			if (this.state.showcart) {
+				cartDiv = (
+					<div id="cart-div">
+						<span id="cart-close-btn"><button onClick={this.hideCart}>X</button></span>
+						{/* This is the cart! */}
+
+						<div>
+							{itemList = (cart.items).map(eachItem => {
+								return (
+									<div id={eachItem} key={eachItem} className="each-item container">
+										<div>{eachItem.item_name} <span className="cartQty"><button id={JSON.stringify(eachItem)} onClick={this.qtyDecrement}> - </button> {eachItem.qty} <button id={JSON.stringify(eachItem)} onClick={this.qtyIncrement}> + </button></span></div>
+									</div>
+								);
+							})}
+
+							<br />
+							<button style={{width: '90%', marginLeft: '50px', marginRight: '25px'}} id="checkout" onClick={this.proceedToCheckout}>Proceed to Checkout</button>
+							{/* hello in modal! */}
+						</div>
+
+					</div>
+				);
+			}
+		}
+
+		let modal = null;
 		// if (localStorage.getItem('UBER_EATS_CART') || this.state.isCartUpdated) {
 		if (localStorage.getItem('UBER_EATS_CART')) {
 			
@@ -175,7 +314,7 @@ export class userhome extends Component {
 
 			let itemList = null;
 			modal = <Modal show={true} handleClose={this.hideModal}>
-						<div className="container">
+						<div className="">
 							<h3>Your cart!</h3>
 							<br />
 							
@@ -205,33 +344,49 @@ export class userhome extends Component {
 			console.log('Modal is: ', modal);
 		}
 
+		let redirectVar2 = null;
+        if (this.state.checkoutBtnClicked) {
+            redirectVar2 = <Redirect to="/checkout"/>
+            console.log('Inside checkoutBtnClick check in render method. RedirectVar2 is: ', redirectVar2);
+            this.setState({
+                checkoutBtnClicked: false
+            });
+        }
+
 		return (
 			<div>
-				{/* <Navbar /> */}
-				{/* {modal} */}
-				<div className="container">
-				{/* {modal} */}
-					<div className="row">
-					{modal}
-						<div className="col-md-10">
-							<form>
-								<input
-									style={{ width: "100%", height: "42px" }}
-									placeholder="Search here"
-									value={this.state.query}
-									onChange={this.handleInputChange}
-								/>
-							</form>
-						</div>
-						<div className="col-md-2">
-							<button onClick={this.showModal}>CART</button>
+				{redirectVar2}
+				<div>
+					<div className="container">
+						<div className="row">
+						
+							<div className="col-md-10">
+								<form>
+									<input
+										style={{ width: "100%", height: "42px" }}
+										placeholder="Search here"
+										value={this.state.query}
+										onChange={this.handleInputChange}
+									/>
+								</form>
+							</div>
+							<div className="col-md-2">
+								{/* <button onClick={this.showModal}>CART</button>
+								{modal} */}
+
+								<button onClick={this.showCart}>CART</button>
+
+							</div>
 						</div>
 					</div>
-				</div>
-				<div className="container-fluid padding">
-					<div className="row padding" style={{ zIndex: 30 }}>
-						{restoSuggestionsDiv}
+					<div className="container-fluid padding">
+						<div className="row padding" style={{ zIndex: 30 }}>
+							{restoSuggestionsDiv}
+						</div>
 					</div>
+
+					{cartDiv}
+					
 				</div>
 			</div>
 		)

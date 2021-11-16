@@ -120,8 +120,8 @@ app.post('/user/login', (req, res) => {
 app.post('/user/placeOrder', (req, res) => {
 
 
-    console.log(req.body);
-    kafka.make_request("palceorder", req.body, function (err, results) {
+    console.log('Inside placeOrder api | Req body is: ', req.body.order_data);
+    kafka.make_request("palceorder", req.body.order_data, function (err, results) {
         if (err) {
             console.log("Inside err");
             res.json({

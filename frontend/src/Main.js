@@ -20,6 +20,7 @@ import restrologin from './components/Restaurant/restrologin';
 import restrosignup from './components/Restaurant/restrosignup';
 import Navbar from './components/Navbar';
 import CustomerRestaurant from './components/User/CustomerRestaurant';
+import PlaceOrder from './components/User/PlaceOrder'
 
 //Create a Main Component
 class Main extends Component {
@@ -36,7 +37,8 @@ class Main extends Component {
                 <Route path="/menu" component={menu} />
                 <Route path="/profile" component={profile} />
                 <Route path="/favourites" component={favourites} />
-                <Route path="/checkout" component={checkout} />
+                <Route path="/checkout" component={PlaceOrder} />\
+                {/* <Route path="/customer/checkout" component={CustomerRestaurant} /> */}
                 <Route path="/customer/restaurant" component={CustomerRestaurant} />
 
                 <Route path="/restaurant/login" component={restrologin} />
